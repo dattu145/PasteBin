@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: pastebin-lite
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && cd client && npm install && cd .. && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: PORT
+        value: 3002

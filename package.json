@@ -3,26 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3002",
-    "build": "next build",
-    "start": "next start",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "nodemon server/server.ts",
+    "dev:client": "cd client && npm run dev",
+    "build": "cd client && npm run build && tsc",
+    "start": "ts-node server/server.ts",
     "lint": "eslint"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.93.1",
     "clsx": "^2.1.1",
-    "date-fns": "^4.1.0",
-    "nanoid": "^5.1.6",
-    "next": "16.1.5",
-    "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^20.19.30",
+    "concurrently": "^9.2.1",
     "eslint": "^9",
-    "eslint-config-next": "16.1.5",
-    "typescript": "^5"
+    "nodemon": "^3.1.11"
   }
 }

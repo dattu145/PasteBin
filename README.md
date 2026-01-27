@@ -1,6 +1,13 @@
-# Pastebin Lite
+# Pastebin Lite (MERN-ish Stack)
 
-A simple, secure pastebin application built with Next.js and Supabase.
+A simple, secure pastebin application built with a **Node.js/Express** backend and a **React/Vite** frontend.
+
+## Architecture
+
+This project is structured as a monorepo setup:
+
+-   **`server/`**: The Node.js Express backend. Handles API requests, interactions with Supabase, and serves the static frontend in production.
+-   **`client/`**: The React application (Vite + TypeScript). Handles the UI and client-side routing.
 
 ## Features
 
@@ -8,60 +15,68 @@ A simple, secure pastebin application built with Next.js and Supabase.
 -   **Security**: Content is stored securely in Supabase.
 -   **Expiration**: Set TTL (Time To Live) for auto-deletion (logic handled at read-time).
 -   **View Limits**: Restrict how many times a paste can be viewed (Atomic increments).
--   **Dark Mode**: Sleek, modern UI.
+-   **Dark Mode**: Sleek, modern One Dark inspired UI.
+
+## Local Development
+
+1.  **Install dependencies** (Root, Client, and Server):
+    ```bash
+    npm install
+    cd client && npm install
+    cd ..
+    ```
+
+2.  **Environment Variables**:
+    Create `.env` in the root (or `server/` directory, it will be loaded):
+    ```env
+    NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
+    NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
+    PORT=3002
+    ```
+
+3.  **Run Development Environment**:
+    This starts both the Backend (port 3002) and Filter (port 5173/5174) concurrently.
+    ```bash
+    npm run dev
+    ```
+
+4.  **Access the App**:
+    Open the URL shown in the terminal (e.g., [http://localhost:5173](http://localhost:5173)).
+    The frontend will communicate with the backend API at `http://localhost:3002`.
+
+## Production Build
+
+To run the application in production mode where Node.js serves the frontend:
+
+1.  **Build the Client**:
+    ```bash
+    npm run build
+    ```
+    (This runs `vite build` in `client/` and puts artifacts in `client/dist`).
+
+2.  **Start the Server**:
+    ```bash
+    npm start
+    ```
+    This runs `server/server.ts`, which serves the API and the static files from `client/dist`.
 
 ## File Structure
 
 ```
-├── app/
-│   ├── api/
-│   │   ├── healthz/       # Health check endpoint
-│   │   └── pastes/        # Create and Read API routes
-│   │       └── [id]/      # Dynamic route for specific paste
-│   ├── p/
-│   │   └── [id]/          # View Paste Page (Server Component)
-│   ├── globals.css        # Global styles & Design Tokens
-│   └── page.tsx           # Home Page / Create Paste Form (Client Component)
-├── lib/
-│   ├── pastes.ts          # Shared logic for fetching/incrementing views
-│   ├── supabase.ts        # Supabase client singletons
-│   └── utils.ts           # Utility functions (ID generation, etc.)
-├── .env                   # Environment variables
-└── supabase_schema.sql    # SQL to create tables in Supabase
+├── client/                # React setup
+│   ├── src/
+│   │   ├── App.tsx        # Router
+│   │   ├── PasteCreate.tsx# Home Form
+│   │   ├── PasteView.tsx  # View Page
+│   │   └── index.css      # Styles
+│   └── vite.config.ts
+├── server/                # Node setup
+│   ├── server.ts          # Entry point
+│   ├── routes/
+│   │   ├── pastes.ts      # API Logic
+│   │   └── healthz.ts
+│   └── lib/
+│       └── supabase.ts
+├── package.json           # Root scripts (concurrently, etc.)
+└── .env
 ```
-
-## How to run the app locally
-
-1.  **Clone the repository**.
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-3.  **Configure Supabase**:
-    -   Create a project at [https://supabase.com](https://supabase.com).
-    -   Go to **Project Settings -> API** and copy `URL` and `anon public key`.
-    -   Paste them into `.env`:
-        ```env
-        NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
-        NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
-        ```
-    -   Run the SQL found in `supabase_schema.sql` in your Supabase **SQL Editor** to create tables and functions.
-
-4.  **Run the development server**:
-    ```bash
-    npm run dev
-    ```
-5.  Open [http://localhost:3000](http://localhost:3000).
-
-## Persistence Layer
-
-This application uses **Supabase (PostgreSQL)** for persistence.
--   **Direct Connection**: Uses `@supabase/supabase-js` for robust, real-time ready data access.
--   **Atomic Operations**: Uses Postgres Functions (RPC) to atomically increment view counts, ensuring strict view limits even under high concurrency.
--   **Deployment**: Zero-config deployment on Vercel (just add the env vars).
-
-## Design Decisions
-
--   **Supabase over Prisma**: For a "Pastebin-like" app, Supabase offers a streamlined API, built-in Row Level Security (RLS), and a simpler deployment story without managing database proxies/connection pools manually.
--   **Server-Side Rendering (SSR)**: Paste views are rendered on the server for speed and SEO.
--   **Client-Side Interactivity**: The creation form uses React Client Components for a responsive UX.
