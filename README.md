@@ -1,82 +1,107 @@
-# Pastebin Lite (MERN-ish Stack)
+# Pastebin Lite
 
-A simple, secure pastebin application built with a **Node.js/Express** backend and a **React/Vite** frontend.
+A simple pastebin web application where users can share text content with optional expiration and view limits.
 
-## Architecture
+## Tech Stack
 
-This project is structured as a monorepo setup:
-
--   **`server/`**: The Node.js Express backend. Handles API requests, interactions with Supabase, and serves the static frontend in production.
--   **`client/`**: The React application (Vite + TypeScript). Handles the UI and client-side routing.
+- **Frontend**: React (Vite) + TypeScript
+- **Backend**: Node.js + Express + TypeScript
+- **Database**: Supabase (PostgreSQL)
 
 ## Features
 
--   **Create Pastes**: Share text snippets easily.
--   **Security**: Content is stored securely in Supabase.
--   **Expiration**: Set TTL (Time To Live) for auto-deletion (logic handled at read-time).
--   **View Limits**: Restrict how many times a paste can be viewed (Atomic increments).
--   **Dark Mode**: Sleek, modern One Dark inspired UI.
+- Create and share text snippets with a unique URL
+- Set expiration time (in seconds)
+- Limit number of views
+- Automatic view counting
 
-## Local Development
+## Local Setup
 
-1.  **Install dependencies** (Root, Client, and Server):
-    ```bash
-    npm install
-    cd client && npm install
-    cd ..
-    ```
+### Prerequisites
 
-2.  **Environment Variables**:
-    Create `.env` in the root (or `server/` directory, it will be loaded):
-    ```env
-    NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
-    NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
-    PORT=3002
-    ```
+- Node.js 18+ installed
+- A Supabase account ([signup here](https://supabase.com))
 
-3.  **Run Development Environment**:
-    This starts both the Backend (port 3002) and Filter (port 5173/5174) concurrently.
-    ```bash
-    npm run dev
-    ```
+### 1. Clone the Repository
 
-4.  **Access the App**:
-    Open the URL shown in the terminal (e.g., [http://localhost:5173](http://localhost:5173)).
-    The frontend will communicate with the backend API at `http://localhost:3002`.
+```bash
+git clone <repository-url>
+cd pastebin-lite
+```
 
-## Production Build
+### 2. Install Dependencies
 
-To run the application in production mode where Node.js serves the frontend:
+```bash
+# Install root dependencies
+npm install
 
-1.  **Build the Client**:
-    ```bash
-    npm run build
-    ```
-    (This runs `vite build` in `client/` and puts artifacts in `client/dist`).
+# Install client dependencies
+cd client
+npm install
+cd ..
+```
 
-2.  **Start the Server**:
-    ```bash
-    npm start
-    ```
-    This runs `server/server.ts`, which serves the API and the static files from `client/dist`.
+### 3. Set Up Supabase Database
 
-## File Structure
+1. Create a new project on [Supabase](https://supabase.com)
+2. Go to **SQL Editor** and run this query:
+
+```sql
+create table pastes (
+  id text primary key,
+  content text not null,
+  expires_at timestamptz,
+  max_views int,
+  current_views int default 0,
+  created_at timestamptz default now()
+);
+
+create function increment_view_count(row_id text)
+returns void as $$
+  update pastes set current_views = current_views + 1 where id = row_id;
+$$ language sql;
+```
+
+### 4. Configure Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+PORT=3002
+```
+
+Replace with your actual Supabase project URL and anon key (found in **Project Settings > API**).
+
+### 5. Run the Application
+
+```bash
+npm run dev
+```
+
+This will start:
+- **Backend server** at `http://localhost:3002`
+- **Frontend** at `http://localhost:5173` (or next available port)
+
+### 6. Open in Browser
+
+Visit `http://localhost:5173` to use the application.
+
+## API Endpoints
+
+- `POST /api/pastes` - Create a new paste
+- `GET /api/pastes/:id` - Retrieve a paste
+- `GET /api/healthz` - Health check
+
+## Project Structure
 
 ```
-├── client/                # React setup
-│   ├── src/
-│   │   ├── App.tsx        # Router
-│   │   ├── PasteCreate.tsx# Home Form
-│   │   ├── PasteView.tsx  # View Page
-│   │   └── index.css      # Styles
-│   └── vite.config.ts
-├── server/                # Node setup
-│   ├── server.ts          # Entry point
+pastebin-lite/
+├── client/           # React frontend
+│   └── src/
+├── server/           # Express backend
 │   ├── routes/
-│   │   ├── pastes.ts      # API Logic
-│   │   └── healthz.ts
 │   └── lib/
-│       └── supabase.ts
-├── package.json           # Root scripts (concurrently, etc.)
-└── .env
+└── package.json
 ```
