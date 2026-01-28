@@ -37,7 +37,7 @@ router.post('/', async (req: Request, res: Response): Promise<void> => {
         }
 
         const testHeader = req.headers['x-test-now-ms'];
-        // Handle array or string for header
+
         const nowHeaderVal = Array.isArray(testHeader) ? testHeader[0] : testHeader;
         const now = getNow(nowHeaderVal as string | undefined);
 

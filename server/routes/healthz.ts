@@ -5,7 +5,6 @@ const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
     try {
-        // Simple query to check connection
         const { data, error } = await supabase.from('pastes').select('count').limit(1);
 
         if (error) {
