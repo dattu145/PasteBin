@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Environment files
+# .env.development and .env.production are tracked (non-sensitive config)
+# .env.local is ignored (for local overrides with secrets)
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

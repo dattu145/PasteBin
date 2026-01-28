@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const API_Base = 'http://localhost:3002/api'; // In dev we hit 3002 directly
+const API_Base = import.meta.env.VITE_API_BASE_URL || '/api';
 
 export function PasteCreate() {
     const [content, setContent] = useState('');

@@ -27,7 +27,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files
-.env*
+# Allow .env.development and .env.production (non-sensitive config)
+# Ignore .env and .env.local files (may contain secrets)
+.env
 .env.local
 .env.development.local
 .env.test.local

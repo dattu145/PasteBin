@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
-const API_Base = 'http://localhost:3002/api';
+const API_Base = import.meta.env.VITE_API_BASE_URL || '/api';
 
 type PasteData = {
     content: string;
