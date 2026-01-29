@@ -306,3 +306,353 @@ pre {
   background-color: #333;
   margin: 0 1.5rem;
 }
+
+@media (max-width: 480px) {
+  :root {
+    --radius: 0.5rem;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .view-container {
+    padding: 1rem;
+    max-width: 100%;
+  }
+
+  .card {
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .label {
+    font-size: 0.875rem;
+  }
+
+  .input,
+  .textarea {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .textarea {
+    min-height: 150px;
+  }
+
+  .btn-primary,
+  .btn-primary-sm,
+  .btn-secondary {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.925rem;
+    width: 100%;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .input-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .copy-btn {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.7rem;
+    display: inline-block;
+    margin: 0.25rem;
+  }
+
+  .meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+
+  .content {
+    padding: 1rem;
+  }
+
+  pre {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .not-found-container {
+    padding: 1rem;
+  }
+
+  .not-found-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .divider {
+    height: 1px;
+    width: 60px;
+    margin: 0;
+  }
+
+  .error-msg {
+    padding: 0.875rem;
+    font-size: 0.875rem;
+  }
+
+  .hint {
+    font-size: 0.7rem;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 640px) {
+  h1 {
+    font-size: 2rem !important;
+  }
+
+  .view-container {
+    padding: 1.25rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn-primary,
+  .btn-primary-sm,
+  .btn-secondary {
+    width: 100%;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .copy-btn {
+    width: 100%;
+  }
+}
+
+/* Medium Devices (Tablets, 641px - 768px) */
+@media (min-width: 641px) and (max-width: 768px) {
+  h1 {
+    font-size: 2.25rem !important;
+  }
+
+  .view-container {
+    padding: 1.5rem;
+    max-width: 600px;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .btn-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary-sm,
+  .btn-secondary {
+    flex: 1;
+    min-width: 150px;
+  }
+}
+
+/* Large Tablets / Small Laptops (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .view-container {
+    max-width: 650px;
+    padding: 1.75rem;
+  }
+
+  .card {
+    padding: 1.75rem;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop and larger (1025px+) */
+@media (min-width: 1025px) {
+  .view-container {
+    max-width: 700px;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Extra Large Screens (1440px+) */
+@media (min-width: 1440px) {
+  :root {
+    --radius: 1rem;
+  }
+
+  .view-container {
+    max-width: 800px;
+  }
+
+  h1 {
+    font-size: 3.5rem !important;
+  }
+
+  .card {
+    padding: 2.5rem;
+  }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .btn-primary,
+  .btn-primary-sm,
+  .btn-secondary,
+  .copy-btn {
+    min-height: 44px; /* Minimum touch target size */
+    padding: 0.875rem 1.25rem;
+  }
+
+  .input,
+  .textarea {
+    min-height: 44px;
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+}
+
+/* Landscape Mode for Mobile Devices */
+@media (max-width: 768px) and (orientation: landscape) {
+  .view-container {
+    padding: 1rem 2rem;
+  }
+
+  .not-found-container {
+    height: auto;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+  }
+
+  h1 {
+    font-size: 1.75rem !important;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* High DPI / Retina Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Responsive Typography Utilities */
+@media (max-width: 640px) {
+  h2 {
+    font-size: 1.5rem !important;
+  }
+
+  h3 {
+    font-size: 1.25rem !important;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Improved overflow handling for code blocks */
+@media (max-width: 768px) {
+  .content {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .btn-primary,
+  .btn-primary-sm,
+  .btn-secondary,
+  .copy-btn,
+  .btn-link {
+    display: none;
+  }
+
+  .card {
+    border: 1px solid #000;
+    box-shadow: none;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}
