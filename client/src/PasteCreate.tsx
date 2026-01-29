@@ -32,10 +32,6 @@ export function PasteCreate() {
                 throw new Error(data.error || 'Something went wrong');
             }
 
-            // data.url might be full URL from backend, but front-end routing is client-side.
-            // Backend returns "http://localhost:3002/p/ID".
-            // We want to show the FRONTEND url.
-            // We can construct it from current location or use the ID.
             const currentOrigin = window.location.origin;
             setResultUrl(`${currentOrigin}/p/${data.id}`);
 

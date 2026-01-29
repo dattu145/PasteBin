@@ -35,9 +35,6 @@ export function PasteView() {
             })
             .catch((err) => {
                 setError(err.message);
-                // Reset fetched status if error, to allow retry if component re-mounts or ID changes
-                // But in StrictMode dev this might still loop if we aren't careful.
-                // For a simple 'burn on read', explicit error state is final.
             })
             .finally(() => {
                 setLoading(false);
